@@ -193,7 +193,9 @@ public class Encoder {
                                 if (commentCheck.equals("//"))
                                         continue;
 				if (instructions[i].equals("\n"))
-					continue;
+					{
+					    continue;
+					}
                                String[] instruction = instructions[i].split(" ", 2);
                                 
                                 if(i>0){
@@ -231,7 +233,9 @@ public class Encoder {
 										instruction=last_instruction;
 										//System.out.println(Integer.toString(instruction.length));
 									}
-								if (debug) System.out.println(java.util.Arrays.toString(instruction));
+								if (debug) {
+								    System.out.println(java.util.Arrays.toString(instruction));
+								}
                                 	if (instruction[0].equals("DEFAULT_DELAY")
                                                 || instruction[0].equals("DEFAULTDELAY")) {
                                       	  defaultDelay = Integer.parseInt(instruction[1].trim());
