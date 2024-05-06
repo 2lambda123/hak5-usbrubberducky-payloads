@@ -69,20 +69,20 @@ public class Encoder {
         }
 
         for (int i = 0; i < args.length; i++) {
-                if (args[i].equals("--gui") || args[i].equals("-g")) {
+                if ("--gui".equals(args[i]) || "-g".equals(args[i])) {
                         System.out.println("Launch GUI");
-                } else if (args[i].equals("--help") || args[i].equals("-h")) {
+                } else if ("--help".equals(args[i]) || "-h".equals(args[i])) {
                         System.out.println(helpStr);
-                } else if (args[i].equals("-i")) {
+                } else if ("-i".equals(args[i])) {
                         // encode file
                         inputFile = args[++i];
-                } else if (args[i].equals("-o")) {
+                } else if ("-o".equals(args[i])) {
                         // output file
                         outputFile = args[++i];
-                } else if (args[i].equals("-l")) {
+                } else if ("-l".equals(args[i])) {
                         // output file
                         layoutFile = args[++i];
-                } else if (args[i].equals("-d")) {
+                } else if ("-d".equals(args[i])) {
                     // output file
                     debug=true;
                 } else {
@@ -190,9 +190,9 @@ public class Encoder {
                         try {
                                 boolean delayOverride = false;
                                 String commentCheck = instructions[i].substring(0, 2);
-                                if (commentCheck.equals("//"))
+                                if ("//".equals(commentCheck))
                                         continue;
-				if (instructions[i].equals("\n"))
+				if ("\n".equals(instructions[i]))
 					continue;
                                String[] instruction = instructions[i].split(" ", 2);
                                 
@@ -216,10 +216,10 @@ public class Encoder {
                                         instruction[1].trim();
                                 }
 
-								if (instruction[0].equals("REM")){
+								if ("REM".equals(instruction[0])){
 									continue;
 								}
-								if (instruction[0].equals("REPEAT")){
+								if ("REPEAT".equals(instruction[0])){
 									loop=Integer.parseInt(instruction[1].trim());
 									repeat=true;
 								}else{
@@ -232,11 +232,11 @@ public class Encoder {
 										//System.out.println(Integer.toString(instruction.length));
 									}
 								if (debug) System.out.println(java.util.Arrays.toString(instruction));
-                                	if (instruction[0].equals("DEFAULT_DELAY")
-                                                || instruction[0].equals("DEFAULTDELAY")) {
+                                	if ("DEFAULT_DELAY".equals(instruction[0])
+                                                || "DEFAULTDELAY".equals(instruction[0])) {
                                       	  defaultDelay = Integer.parseInt(instruction[1].trim());
                                        	 delayOverride = true;
-                                	} else if (instruction[0].equals("DELAY")) {
+                                	} else if ("DELAY".equals(instruction[0])) {
                                         int delay = Integer.parseInt(instruction[1].trim());
                                         while (delay > 0) {
                                                 file.add((byte) 0x00);
@@ -249,12 +249,12 @@ public class Encoder {
                                                 }
                                         }
                                         delayOverride = true;
-                                	} else if (instruction[0].equals("STRING")) {
+                                	} else if ("STRING".equals(instruction[0])) {
                                         for (int j = 0; j < instruction[1].length(); j++) {
                                                 char c = instruction[1].charAt(j);
                                                 addBytes(file,charToBytes(c));
                                         }
-                                	} else if (instruction[0].equals("STRING_DELAY")) {
+                                	} else if ("STRING_DELAY".equals(instruction[0])) {
                                 		final String[] twoOptions = instruction[1].split(" ", 2);
                                 		final int delayMillis = Integer.parseInt(twoOptions[0].trim());
                                 		final String userText = twoOptions[1].trim();
@@ -276,8 +276,8 @@ public class Encoder {
                                                 	}
                                                 }
                                         }
-                                	} else if (instruction[0].equals("CONTROL")
-                                                || instruction[0].equals("CTRL")) {
+                                	} else if ("CONTROL".equals(instruction[0])
+                                                || "CTRL".equals(instruction[0])) {
                                         if (instruction.length != 1){
                                                 file.add(strInstrToByte(instruction[1]));
                                                 file.add(strToByte(keyboardProps.getProperty("MODIFIERKEY_CTRL")));
@@ -285,7 +285,7 @@ public class Encoder {
                                                 file.add(strToByte(keyboardProps.getProperty("KEY_LEFT_CTRL")));
                                                 file.add((byte) 0x00);
                                         }                               
-                                	} else if (instruction[0].equals("ALT")) {
+                                	} else if ("ALT".equals(instruction[0])) {
                                         if (instruction.length != 1){
                                                 file.add(strInstrToByte(instruction[1]));
                                                 file.add(strToByte(keyboardProps.getProperty("MODIFIERKEY_ALT")));
@@ -293,7 +293,7 @@ public class Encoder {
                                                 file.add(strToByte(keyboardProps.getProperty("KEY_LEFT_ALT")));
                                                 file.add((byte) 0x00);
                                         }
-                                	} else if (instruction[0].equals("SHIFT")) {
+                                	} else if ("SHIFT".equals(instruction[0])) {
                                         if (instruction.length != 1) {
                                                 file.add(strInstrToByte(instruction[1]));
                                                 file.add(strToByte(keyboardProps.getProperty("MODIFIERKEY_SHIFT")));
@@ -301,7 +301,7 @@ public class Encoder {
                                                 file.add(strToByte(keyboardProps.getProperty("KEY_LEFT_SHIFT")));
                                                 file.add((byte) 0x00);
                                         }
-                                	} else if (instruction[0].equals("CTRL-ALT")) {
+                                	} else if ("CTRL-ALT".equals(instruction[0])) {
                                         if (instruction.length != 1) {
                                                 file.add(strInstrToByte(instruction[1]));
                                                 file.add((byte) (strToByte(keyboardProps.getProperty("MODIFIERKEY_CTRL"))
@@ -309,7 +309,7 @@ public class Encoder {
                                         } else {
                                                 continue;
                                         }
-                                	} else if (instruction[0].equals("CTRL-SHIFT")) {
+                                	} else if ("CTRL-SHIFT".equals(instruction[0])) {
                                         if (instruction.length != 1) {
                                                 file.add(strInstrToByte(instruction[1]));
                                                 file.add((byte) (strToByte(keyboardProps.getProperty("MODIFIERKEY_CTRL"))
@@ -317,7 +317,7 @@ public class Encoder {
                                         } else {
                                                 continue;
                                         }
-                                    } else if (instruction[0].equals("COMMAND-OPTION")) {
+                                    } else if ("COMMAND-OPTION".equals(instruction[0])) {
                                         if (instruction.length != 1) {
                                                 file.add(strInstrToByte(instruction[1]));
                                                 file.add((byte) (strToByte(keyboardProps.getProperty("MODIFIERKEY_KEY_LEFT_GUI"))
@@ -325,7 +325,7 @@ public class Encoder {
                                         } else {
                                                 continue;
                                         }
-                                	} else if (instruction[0].equals("ALT-SHIFT")) {
+                                	} else if ("ALT-SHIFT".equals(instruction[0])) {
                                         if (instruction.length != 1) {
                                             file.add(strInstrToByte(instruction[1]));
                                             file.add((byte) (strToByte(keyboardProps.getProperty("MODIFIERKEY_LEFT_ALT"))
@@ -337,19 +337,19 @@ public class Encoder {
                                                                 | strToByte(keyboardProps.getProperty("MODIFIERKEY_SHIFT")))
                                                         );
                                         }
-                                	} else if (instruction[0].equals("ALT-TAB")){
+                                	} else if ("ALT-TAB".equals(instruction[0])){
                                         if (instruction.length == 1) {
                                             file.add(strToByte(keyboardProps.getProperty("KEY_TAB")));
                                             file.add(strToByte(keyboardProps.getProperty("MODIFIERKEY_LEFT_ALT")));
                                         } else{
                                             // do something?
                                         }
-                                    } else if (instruction[0].equals("REM")) {
+                                    } else if ("REM".equals(instruction[0])) {
                                         /* no default delay for the comments */
                                         delayOverride = true;
                                         continue;
-                                	} else if (instruction[0].equals("WINDOWS")
-                                                || instruction[0].equals("GUI")) {
+                                	} else if ("WINDOWS".equals(instruction[0])
+                                                || "GUI".equals(instruction[0])) {
                                         if (instruction.length == 1) {
                                                 file.add(strToByte(keyboardProps.getProperty("MODIFIERKEY_LEFT_GUI")));
                                                 file.add((byte) 0x00);
@@ -357,7 +357,7 @@ public class Encoder {
                                                 file.add(strInstrToByte(instruction[1]));
                                                 file.add(strToByte(keyboardProps.getProperty("MODIFIERKEY_LEFT_GUI")));
                                         }
-                                	} else if (instruction[0].equals("COMMAND")){
+                                	} else if ("COMMAND".equals(instruction[0])){
                                         if (instruction.length == 1) {
                                                 file.add(strToByte(keyboardProps.getProperty("KEY_COMMAND")));
                                                 file.add((byte) 0x00);
@@ -472,41 +472,41 @@ public class Encoder {
                 if(keyboardProps.getProperty("KEY_"+instruction)!=null)
                         return strToByte(keyboardProps.getProperty("KEY_"+instruction));
                 /* instruction different from the key name */
-                if(instruction.equals("ESCAPE"))
+                if("ESCAPE".equals(instruction))
                         return strInstrToByte("ESC");
-                if(instruction.equals("DEL"))
+                if("DEL".equals(instruction))
                         return strInstrToByte("DELETE");
-                if(instruction.equals("BREAK"))
+                if("BREAK".equals(instruction))
                         return strInstrToByte("PAUSE");
-                if(instruction.equals("CONTROL"))
+                if("CONTROL".equals(instruction))
                         return strInstrToByte("CTRL");
-                if(instruction.equals("DOWNARROW"))
+                if("DOWNARROW".equals(instruction))
                         return strInstrToByte("DOWN");
-                if(instruction.equals("UPARROW"))
+                if("UPARROW".equals(instruction))
                         return strInstrToByte("UP");
-                if(instruction.equals("LEFTARROW"))
+                if("LEFTARROW".equals(instruction))
                         return strInstrToByte("LEFT");
-                if(instruction.equals("RIGHTARROW"))
+                if("RIGHTARROW".equals(instruction))
                         return strInstrToByte("RIGHT");
-                if(instruction.equals("MENU"))
+                if("MENU".equals(instruction))
                         return strInstrToByte("APP");
-                if(instruction.equals("WINDOWS"))
+                if("WINDOWS".equals(instruction))
                         return strInstrToByte("GUI");
-                if(instruction.equals("PLAY") || instruction.equals("PAUSE"))
+                if("PLAY".equals(instruction) || "PAUSE".equals(instruction))
                         return strInstrToByte("MEDIA_PLAY_PAUSE");
-                if(instruction.equals("STOP"))
+                if("STOP".equals(instruction))
                         return strInstrToByte("MEDIA_STOP");
-                if(instruction.equals("MUTE"))
+                if("MUTE".equals(instruction))
                         return strInstrToByte("MEDIA_MUTE");
-                if(instruction.equals("VOLUMEUP"))
+                if("VOLUMEUP".equals(instruction))
                         return strInstrToByte("MEDIA_VOLUME_INC");
-                if(instruction.equals("VOLUMEDOWN"))
+                if("VOLUMEDOWN".equals(instruction))
                         return strInstrToByte("MEDIA_VOLUME_DEC");
-                if(instruction.equals("SCROLLLOCK"))
+                if("SCROLLLOCK".equals(instruction))
                         return strInstrToByte("SCROLL_LOCK");
-                if(instruction.equals("NUMLOCK"))
+                if("NUMLOCK".equals(instruction))
                         return strInstrToByte("NUM_LOCK");
-                if(instruction.equals("CAPSLOCK"))
+                if("CAPSLOCK".equals(instruction))
                         return strInstrToByte("CAPS_LOCK");
                 /* else take first letter */
                 return charToBytes(instruction.charAt(0))[0];
